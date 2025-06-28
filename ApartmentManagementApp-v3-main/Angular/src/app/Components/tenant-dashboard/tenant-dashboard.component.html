@@ -1,0 +1,99 @@
+<div class="dashboard-container">
+  <nav class="sidebar">
+    <img src="app-logo.png" alt="App Logo" class="app-logo" />
+    <hr />
+    <div class="profile-section">
+      <img [src]="tenantAvatar()" alt="Tenant Avatar" class="avatar">
+      <h3>{{ tenantName() }}</h3>
+      <p class="role-badge">Tenant</p>
+    </div>
+    <hr />
+    <ul>
+      <li>
+        <a routerLink="/tenant-dashboard" routerLinkActive="active">
+          <img src="icons/dashboard.png" alt="Dashboard Icon" class="nav-icon" />
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a routerLink="/tenant-dashboard/customer-apartments" routerLinkActive="active">
+          <img src="icons/apartment.png" alt="Apartment Icon" class="nav-icon" />
+          Apartments
+        </a>
+      </li>
+      <li>
+        <a routerLink="/tenant-dashboard/maintenance-center" routerLinkActive="active">
+          <img src="icons/contract.png" alt="Maintenance Icon" class="nav-icon" />
+          Maintenance
+        </a>
+      </li>
+      <li>
+        <a routerLink="/technicians" routerLinkActive="active">
+          <img src="icons/technician.png" alt="Technicians Icon" class="nav-icon" />
+          Find Technicians
+        </a>
+      </li>
+      <li>
+        <a routerLink="/tenant-dashboard/messages" routerLinkActive="active">
+          <img src="icons/messages.png" alt="Messages Icon" class="nav-icon" />
+          Messages
+        </a>
+      </li>
+      <li>
+        <a routerLink="/tenant-dashboard/customer-payments" routerLinkActive="active">
+          <img src="icons/payments.png" alt="Payments Icon" class="nav-icon" />
+          Payments
+        </a>
+      </li>
+      <li>
+        <a routerLink="/tenant-dashboard/customer-contracts" routerLinkActive="active">
+          <img src="icons/contract.png" alt="Contracts Icon" class="nav-icon" />
+          Contracts
+        </a>
+      </li>
+      <li>
+        <a routerLink="/tenant-dashboard/bank-cards" routerLinkActive="active">
+          <img src="icons/bank_cards.png" alt="Bank Cards Icon" class="nav-icon" />
+          Banks & Cards
+        </a>
+      </li>
+      <li>
+        <a routerLink="/tenant-dashboard/profile" routerLinkActive="active">
+          <img src="icons/user.png" alt="Profile Icon" class="nav-icon" />
+          Profile
+        </a>
+      </li>
+      <li>
+        <a routerLink="/tenant-dashboard/help" routerLinkActive="active">
+          <img src="icons/help.png" alt="Help Icon" class="nav-icon" />
+          Help
+        </a>
+      </li>
+      <li>
+        <a (click)="logout()" class="logout-link">
+          <img src="icons/logout.png" alt="Logout Icon" class="nav-icon" />
+          Logout
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <!-- Uncomment and use if you want to show stats -->
+    <!-- <div class="stats-bar">
+      <div class="stat-card">
+        <h4>Active Requests</h4>
+        <p>3</p>
+      </div>
+      <div class="stat-card">
+        <h4>Pending Payments</h4>
+        <p>1</p> 
+      </div>
+      <div class="stat-card">
+        <h4>Messages</h4>
+        <p>2</p> 
+      </div>
+    </div> -->
+    <router-outlet></router-outlet>
+  </main>
+</div>

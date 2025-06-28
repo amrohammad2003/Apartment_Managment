@@ -1,0 +1,92 @@
+<div class="technician-list-table">
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <input
+      type="text"
+      [(ngModel)]="filters.name"
+      placeholder="Search by name"
+      aria-label="Filter by name"
+    />
+    <input
+      type="text"
+      [(ngModel)]="filters.job"
+      placeholder="Filter by job (e.g., plumber)"
+      aria-label="Filter by job"
+    />
+   
+    <div class="filter-actions">
+      <button (click)="applyFilters()">Apply Filters</button>
+      <button class="reset" (click)="resetFilters()">Reset</button>
+    </div>
+  </div>
+
+  <!-- Technician Table -->
+  <div class="table-container" *ngIf="technicians.length > 0">
+    <table class="custom-technician-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Job</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Facebook</th>
+          <th>Rating</th>
+          <th>Member Since</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tech of technicians">
+          <td>
+            {{ tech.full_name }}
+            <span *ngIf="tech.is_verified" class="verified-badge">
+              <i class="bi bi-check-circle"></i> Verified
+            </span>
+          </td>
+          <td>{{ tech.job || 'General Technician' }}</td>
+          <td>
+            <a [href]="'mailto:' + tech.email">
+              {{ tech.email }}
+            </a>
+          </td>
+          <td>
+            <a [href]="'tel:' + tech.phone_number">
+              {{ tech.phone_number }}
+            </a>
+          </td>
+          <td>
+            <a *ngIf="tech.facebook_link" [href]="tech.facebook_link" target="_blank">
+              Profile
+            </a>
+          </td>
+          <td *ngIf="tech.rating">
+            <i class="bi bi-star-fill text-warning me-1"></i>
+            {{ tech.rating }}/5 ({{ tech.reviews_count }})
+          </td>
+          <td>{{ tech.created_at | date: 'mediumDate' }}</td>
+          <td>
+            <button class="action-btn" (click)="requestMaintenance(tech)">
+              <i class="bi bi-tools"></i> Request
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && technicians.length === 0">
+    <p>
+      <i class="bi bi-info-circle text-muted"></i><br />
+      No technicians found matching your criteria.
+    </p>
+    <button class="btn-link" (click)="resetFilters()">Clear Filters</button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p>Loading technicians...</p>
+  </div>
+</div>

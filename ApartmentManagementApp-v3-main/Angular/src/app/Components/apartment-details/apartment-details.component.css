@@ -1,0 +1,179 @@
+.apartment-details-container {
+  width: 95%;
+  max-width: 1100px;
+  margin: 90px auto;
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  color: #333;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s;
+}
+
+.apartment-details-container:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.image-gallery {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.main-photo {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.thumbnail-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.thumbnail {
+  width: 90px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border 0.2s, transform 0.2s;
+}
+
+.thumbnail:hover {
+  border: 2px solid #007bff;
+  transform: scale(1.05);
+}
+
+.details-content h1,
+.details-content h3 {
+  font-weight: 600;
+  font-size: 1.75rem;
+  color: #1a1a1a;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.details-content p {
+  margin: 8px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.details-content strong {
+  min-width: 160px;
+  display: inline-block;
+  font-weight: 500;
+  color: #555;
+}
+
+.details-content {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+.price {
+  color: #007bff;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.detach-section {
+ margin-top: 50px; 
+}
+.contact-owner-btn,
+.owner-controls button,
+.detach-section button {
+  margin-top: 20px;
+  padding: 12px 28px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.contact-owner-btn:hover,
+.owner-controls button:hover,
+.detach-section button:hover {
+  background: linear-gradient(135deg, #0056b3, #004494);
+  transform: translateY(-2px);
+}
+
+.owner-controls {
+  background: #fafafa;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-top: 40px;
+}
+
+.owner-controls select {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+.transaction-section label {
+
+  font-weight: 600;
+  color: #333;
+}
+
+.transaction-section label input,
+.transaction-section label select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.transaction-inputs {
+  background: #f1f3f5;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+iframe {
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-top: 12px;
+}
+
+.loading-container,
+.error-message {
+  text-align: center;
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+.go-back-btn {
+  padding: 12px 28px;
+  background: #000000;
+  color: #fff;
+  border-radius: 8px;
+  transition: background 0.3s, transform 0.2s;
+  margin-top: 50px;
+  font-size: 16px;
+}
+
+.go-back-btn:hover {
+  background: #111;
+  transform: translateY(-2px);
+}

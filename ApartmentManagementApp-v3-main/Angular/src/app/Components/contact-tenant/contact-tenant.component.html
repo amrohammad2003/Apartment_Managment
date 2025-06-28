@@ -1,0 +1,16 @@
+<!-- src/app/Components/contact-tenant/contact-tenant.component.html -->
+
+<div class="contact-container">
+  <h2>📩 Contact Tenant</h2>
+
+  <form (ngSubmit)="sendMessage()" *ngIf="!sendSuccess">
+    <textarea [(ngModel)]="message" name="message" placeholder="Write your message..." required></textarea>
+    <button type="submit" [disabled]="sending">{{ sending ? 'Sending...' : 'Send' }}</button>
+    <div class="error" *ngIf="error">{{ error }}</div>
+  </form>
+
+  <div class="success-message" *ngIf="sendSuccess">
+    ✅ Message sent successfully!
+    <button (click)="router.navigate(['/technician-dashboard'])">Back to Dashboard</button>
+  </div>
+</div>

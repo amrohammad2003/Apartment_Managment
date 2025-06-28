@@ -1,0 +1,222 @@
+.maintenance-center-container {
+  padding: 2rem;
+
+  .requests-table-container {
+    margin-top: 2rem;
+
+    h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .requests-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+
+      thead {
+        background-color: #f5f5f5;
+
+        th {
+          padding: 12px 14px;
+          text-align: left;
+          font-weight: 600;
+          color: #555;
+          border-bottom: 2px solid #e0e0e0;
+        }
+      }
+
+      tbody {
+        tr {
+          transition: background-color 0.2s;
+
+          &:hover {
+            background-color: #f9f9f9;
+          }
+
+          td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+
+            &:first-child {
+              font-weight: 500;
+              color: #444;
+            }
+
+            .status-badge {
+              display: inline-block;
+              padding: 4px 10px;
+              border-radius: 12px;
+              font-size: 0.85rem;
+              font-weight: 500;
+              text-transform: capitalize;
+
+              &.Completed {
+                background-color: #e8f5e9;
+                color: #388e3c;
+              }
+
+              &.Pending {
+                background-color: #fff3e0;
+                color: #f57c00;
+              }
+
+              &.Rejected {
+                background-color: #ffebee;
+                color: #d32f2f;
+              }
+
+              &.InProgress {
+                background-color: #e3f2fd;
+                color: #1976d2;
+              }
+            }
+
+            .priority-badge {
+              display: inline-block;
+              padding: 4px 10px;
+              border-radius: 12px;
+              font-size: 0.85rem;
+              font-weight: 500;
+              text-transform: capitalize;
+
+              &.High {
+                background-color: #ffebee;
+                color: #d32f2f;
+              }
+
+              &.Medium {
+                background-color: #fff8e1;
+                color: #f9a825;
+              }
+
+              &.Low {
+                background-color: #e8f5e9;
+                color: #388e3c;
+              }
+            }
+
+            .details-btn {
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              padding: 6px 12px;
+              font-size: 0.85rem;
+              border: none;
+              border-radius: 4px;
+              background-color: #e3f2fd;
+              color: #1976d2;
+              cursor: pointer;
+
+              i {
+                font-size: 1rem;
+              }
+
+              &:hover {
+                background-color: #bbdefb;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .filter-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+
+    mat-form-field {
+      min-width: 180px;
+    }
+
+    .custom-reset-btn {
+      align-self: center;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+  }
+
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem;
+    text-align: center;
+
+    p {
+      margin-top: 1rem;
+      color: #555;
+    }
+  }
+
+  .fab-add-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+
+    &.pulse {
+      animation: pulse 2s infinite;
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(33, 150, 243, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(33, 150, 243, 0);
+    }
+  }
+  .status-button-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+
+  button {
+    text-transform: capitalize;
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    color: #333;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 0.9rem;
+    cursor: pointer;
+
+    &.active-status {
+      background-color: #1976d2;
+      color: white;
+      border-color: #1976d2;
+    }
+
+    &:hover:not(.active-status) {
+      background-color: #f0f0f0;
+    }
+  }
+}
+
+
+  @media (max-width: 768px) {
+    .requests-table-container {
+      overflow-x: auto;
+    }
+
+    .filter-container {
+      flex-direction: column;
+
+      mat-form-field,
+      .custom-reset-btn {
+        width: 100%;
+      }
+    }
+  }
+}

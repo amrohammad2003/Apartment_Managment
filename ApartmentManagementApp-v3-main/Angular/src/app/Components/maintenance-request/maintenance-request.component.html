@@ -1,0 +1,66 @@
+<div class="maintenance-container">
+  <div class="form-content">
+    <h2>Submit Maintenance Issue</h2>
+
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <!-- Technician Assigned (text-only now) -->
+    <div *ngIf="selectedTechnician" class="tech-selected-info">
+      Assigned to: <strong>{{ selectedTechnician.full_name }}</strong>
+    </div>
+
+    <form [formGroup]="maintenanceForm" (ngSubmit)="submitRequest()">
+      <!-- Description Field -->
+      <mat-form-field appearance="outline" class="form-field wide-description">
+        <mat-label>Describe your issue*</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          rows="6"
+          required
+          placeholder="Please describe the problem in detail...">
+        </textarea>
+        <mat-error *ngIf="f['description'].invalid">Please provide a description (at least 10 characters)</mat-error>
+      </mat-form-field>
+
+      <!-- Optional Image Upload -->
+      <div class="upload-section">
+        <input type="file" (change)="onFileSelected($event)" #fileInput hidden accept="image/*">
+        <button mat-raised-button type="button" (click)="fileInput.click()" class="upload-button">
+          Add Photo (Optional)
+        </button>
+        <div class="file-status">{{ selectedFile?.name || 'No photo added' }}</div>
+
+        <div class="preview" *ngIf="photoPreview">
+          <img [src]="photoPreview" alt="Preview" />
+          <button mat-icon-button class="remove-image" (click)="removeImage()">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="submit-section">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!maintenanceForm.valid || isSubmitting">
+          <span *ngIf="!isSubmitting">Submit Request</span>
+          <span *ngIf="isSubmitting">Submitting...</span>
+        </button>
+      </div>
+
+      <!-- Modern Notification -->
+      <div class="notification">
+        <div class="notification-content">
+          <div class="notification-title">Success!</div>
+          <div class="notification-message">Your request has been submitted</div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

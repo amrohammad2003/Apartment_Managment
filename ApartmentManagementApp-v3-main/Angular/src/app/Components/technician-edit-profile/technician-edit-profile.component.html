@@ -1,0 +1,62 @@
+<form (ngSubmit)="updateProfile()" class="profile-form">
+  <!-- Success Message -->
+  <div *ngIf="success" class="alert alert-success">
+    {{ success }}
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Name Field -->
+  <div class="form-group">
+    <label for="name">Full Name</label>
+    <input 
+      type="text" 
+      id="name"
+      class="form-control"
+      [(ngModel)]="name" 
+      name="name" 
+      required
+      [disabled]="isLoading"
+    />
+  </div>
+
+  <!-- Email Field -->
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input 
+      type="email" 
+      id="email"
+      class="form-control"
+      [(ngModel)]="email" 
+      name="email" 
+      required
+      [disabled]="isLoading"
+    />
+  </div>
+
+  <!-- Avatar Field -->
+  <div class="form-group">
+    <label for="avatar">Avatar URL</label>
+    <input 
+      type="text" 
+      id="avatar"
+      class="form-control"
+      [(ngModel)]="avatar" 
+      name="avatar"
+      [disabled]="isLoading"
+    />
+  </div>
+
+  <!-- Submit Button -->
+  <button 
+    type="submit" 
+    class="btn btn-primary"
+    [disabled]="isLoading"
+  >
+    <span *ngIf="!isLoading">Save Changes</span>
+    <span *ngIf="isLoading">Saving...</span>
+  </button>
+</form>

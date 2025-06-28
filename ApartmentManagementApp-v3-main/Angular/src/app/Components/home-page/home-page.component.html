@@ -1,0 +1,48 @@
+<app-header></app-header> <!-- This will display the header on all pages -->
+
+<div class="hero-section">
+  <img src="hero.jpg" alt="Apartment Hero" class="hero-image">
+  <div class="hero-text">
+    <h2>Appartment Management Platform</h2>
+  </div>
+</div>
+
+<div class="new-listings">
+  <h2>NEW Listings Available For You!</h2>
+  <div class="apartment-grid">
+    <div class="apartment-card" *ngFor="let apartment of apartments | slice:0:4">
+      <div [routerLink]="['/apartment', apartment.id]" class="card-clickable">
+        <div class="card-image">
+          <img [src]="apartment.photos ? apartment.photos[0] : 'assets/default-image.jpg'" alt="Apartment image" class="card-img">
+          <span class="apartment-type">{{ apartment.type }}</span>
+        </div>
+        <h3>{{ apartment.city }} - {{ apartment.location }} ({{ apartment.unit_number }})</h3>
+        <p><strong>Area:</strong> {{ apartment.area }} m²</p>
+        <p><strong>Rooms:</strong> {{ apartment.number_of_rooms }}</p>
+        <p><strong>Price:</strong> ${{ apartment.price }}</p>
+        <div class="view-details-wrapper">
+          <button class="view-details-btn">View Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Cards for Rent and Buy -->
+<div class="action-cards">
+  <h2>Take Action</h2>
+  <div class="action-card-container">
+    <div class="action-card" routerLink="/buy-homes">
+      <img src="buy-app.png" alt="Buy a Home" class="action-card-img">
+      <h3>Buy a Home</h3>
+      <p>Search for an apartment to buy.</p>
+      <button class="action-btn" [routerLink]="'/buy-homes'">Buy Home</button>
+    </div>
+    <div class="action-card" routerLink="/rent-homes">
+      <img src="rent-app.png" alt="Rent a Home" class="action-card-img">
+      <h3>Rent a Home</h3>
+      <p>Search for an apartment to rent.</p>
+      <button class="action-btn" [routerLink]="'/rent-homes'">Rent Home</button>
+    </div>
+  </div>
+</div>

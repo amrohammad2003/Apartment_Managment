@@ -1,0 +1,132 @@
+<div class="table-container" *ngIf="!loading() && !error() && filteredRequests().length > 0">
+  <table class="requests-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tenant</th>
+        <th>Problem Type</th>
+        <th>Details</th>
+        <th>Status</th>
+        <th>Cost/Duration</th>
+        <th>Dates</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let req of filteredRequests()" [ngClass]="getStatusClass(req.status)">
+        <td>#{{ req.id }}</td>
+        <td>
+          <button class="contact-btn" *ngIf="req.user?.name && req.user?.id"
+                  (click)="contactUser(req.user.id, req.id)">
+            <i class="fas fa-comment-alt"></i> {{ req.user.name }}
+          </button>
+          <span *ngIf="!req.user?.name">N/A</span>
+        </td>
+        
+        <td>
+          <div class="problem-type">
+            <i [class]="getProblemIcon(req.problem_type)"></i>
+            {{ req.problem_type }}
+          </div>
+        </td>
+        
+        <td class="description-cell">
+          <div class="description-content">{{ req.truncatedDescription }}</div>
+          <div *ngIf="req.sanitizedImages?.length" class="image-preview">
+            <img *ngFor="let img of req.sanitizedImages" 
+                 [src]="img" 
+                 (click)="openImageModal(img)"
+                 class="thumbnail">
+          </div>
+        </td>
+        
+        <td>
+          <select [(ngModel)]="req.status" (change)="onFieldChange(req.id)"
+                  class="status-select" [ngClass]="'status-' + req.status.toLowerCase()">
+            <option *ngFor="let status of statusOptions" [value]="status"
+                    [disabled]="status === 'Completed' && req.status !== 'Completed'">
+              {{ status }}
+            </option>
+          </select>
+        </td>
+        
+        <td class="cost-duration">
+          <div *ngIf="req.proposedCost">
+            <strong>Cost:</strong> {{ req.formattedCost }}<br>
+            <strong>Duration:</strong> {{ req.formattedDuration }}
+          </div>
+          <div *ngIf="!req.proposedCost" class="no-proposal">
+            No proposal submitted
+          </div>
+        </td>
+        
+        <td class="dates-cell">
+          <div><strong>Created:</strong> {{ req.request_date | date:'shortDate' }}</div>
+          <div class="scheduled-date">
+            <strong>Scheduled:</strong>
+            <input type="datetime-local" 
+                   [value]="formatDateForInput(req.scheduled_date)"
+                   (change)="onDateChange(req, $event)"
+                   class="date-picker"
+                   [min]="today + 'T00:00'"
+                   [disabled]="req.status === 'Completed'">
+          </div>
+          <div *ngIf="req.completed_date">
+            <strong>Completed:</strong> {{ req.completed_date | date:'shortDate' }}
+          </div>
+        </td>
+        
+        <td class="actions-cell">
+          <div class="action-buttons">
+            <button (click)="updateRequest(req)" 
+                    class="save-button"
+                    [disabled]="!editedRequestIds.has(req.id) || isProcessing(req.id)"
+                    *ngIf="req.status !== 'Completed'">
+              <i class="fas fa-save"></i> {{ isProcessing(req.id) ? 'Saving...' : 'Save' }}
+            </button>
+            
+            <button (click)="startProgress(req.id)"
+                    class="progress-button"
+                    *ngIf="req.status === 'Approved'"
+                    [disabled]="isProcessing(req.id)">
+              <i class="fas fa-play"></i> Start Work
+            </button>
+            
+            <button (click)="markAsCompleted(req.id)"
+                    class="complete-button"
+                    *ngIf="req.status === 'In Progress'"
+                    [disabled]="isProcessing(req.id)">
+              <i class="fas fa-check-circle"></i> Complete
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Image Modal -->
+<div class="modal-backdrop" *ngIf="showImageModal()" (click)="closeImageModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-modal" (click)="closeImageModal()">&times;</button>
+    <img [src]="selectedImage()" class="modal-image">
+  </div>
+</div>
+
+<!-- Loading and Empty States -->
+<div class="loading-state" *ngIf="loading()">
+  <i class="fas fa-spinner fa-spin"></i> Loading requests...
+</div>
+
+<div class="empty-state" *ngIf="!loading() && filteredRequests().length === 0">
+  <div *ngIf="error()" class="error-message">
+    <i class="fas fa-exclamation-triangle"></i> {{ error() }}
+  </div>
+  <div *ngIf="!error() && hasActiveFilters()">
+    <i class="fas fa-filter"></i> No requests match your filters
+  </div>
+  <div *ngIf="!error() && !hasActiveFilters()">
+    <i class="fas fa-inbox"></i> No requests found
+  </div>
+</div>

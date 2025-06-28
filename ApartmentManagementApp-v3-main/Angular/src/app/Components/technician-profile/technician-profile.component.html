@@ -1,0 +1,78 @@
+<div class="profile-card">
+  <img [src]="avatar()" alt="Technician Avatar" class="profile-avatar" />
+  <h2>{{ name() }}</h2>
+  <p class="job-title">{{ job() }}</p>
+
+  <div class="profile-info">
+    <label>Full Name</label>
+    <div class="editable-field">
+      <input [readonly]="!editing.name" [(ngModel)]="nameValue" placeholder="Full Name" />
+      <ng-container *ngIf="!editing.name">
+        <button (click)="startEditing('name')" class="edit-icon" title="Edit">✏️</button>
+      </ng-container>
+      <ng-container *ngIf="editing.name">
+        <button (click)="saveProfileField('name')" class="save-icon" title="Save">✅</button>
+        <button (click)="cancelEditing('name')" class="cancel-icon" title="Cancel">❌</button>
+      </ng-container>
+    </div>
+
+    <label>Email</label>
+    <div class="editable-field">
+      <input [readonly]="!editing.email" [(ngModel)]="emailValue" placeholder="Email" />
+      <ng-container *ngIf="!editing.email">
+        <button (click)="startEditing('email')" class="edit-icon" title="Edit">✏️</button>
+      </ng-container>
+      <ng-container *ngIf="editing.email">
+        <button (click)="saveProfileField('email')" class="save-icon" title="Save">✅</button>
+        <button (click)="cancelEditing('email')" class="cancel-icon" title="Cancel">❌</button>
+      </ng-container>
+    </div>
+
+    <label>Phone</label>
+    <div class="editable-field">
+      <input [readonly]="!editing.phone" [(ngModel)]="phoneValue" placeholder="Phone Number" />
+      <ng-container *ngIf="!editing.phone">
+        <button (click)="startEditing('phone')" class="edit-icon" title="Edit">✏️</button>
+      </ng-container>
+      <ng-container *ngIf="editing.phone">
+        <button (click)="saveProfileField('phone')" class="save-icon" title="Save">✅</button>
+        <button (click)="cancelEditing('phone')" class="cancel-icon" title="Cancel">❌</button>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="profile-stats">
+    <div class="stat">
+      <h3>{{ totalRequests() }}</h3>
+      <span>Total Requests</span>
+    </div>
+    <div class="stat">
+      <h3>{{ completedRequests() }}</h3>
+      <span>Completed</span>
+    </div>
+  </div>
+
+  <div class="profile-actions">
+    <button class="edit-btn" (click)="togglePasswordEdit()">
+      {{ isPasswordEditing ? 'Cancel' : 'Change Password' }}
+    </button>
+  </div>
+
+  <div class="password-edit-section" *ngIf="isPasswordEditing">
+    <h4>Update Password</h4>
+
+    <label>Current Password</label>
+    <input type="password" [(ngModel)]="currentPassword" placeholder="Current Password" />
+
+    <label>New Password</label>
+    <input type="password" [(ngModel)]="newPassword" placeholder="New Password" />
+
+    <label>Confirm New Password</label>
+    <input type="password" [(ngModel)]="confirmPassword" placeholder="Confirm Password" />
+
+    <div class="error-message" *ngIf="passwordError">{{ passwordError }}</div>
+    <div class="success-message" *ngIf="passwordSuccess">{{ passwordSuccess }}</div>
+
+    <button class="save-btn" (click)="updatePassword()">Save Password</button>
+  </div>
+</div>

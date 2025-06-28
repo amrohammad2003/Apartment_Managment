@@ -1,0 +1,122 @@
+<app-maintenance-topbar></app-maintenance-topbar>
+
+<div class="maintenance-assignments">
+  <!-- Filter section remains the same -->
+  <div class="filter-bar">
+    <!-- ... existing filter code ... -->
+  </div>
+
+  <h2>Maintenance Assignments</h2>
+
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <span>Loading assignments...</span>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error()) {
+    <div class="error-state">
+      {{ error() }}
+      <button (click)="loadAssignments(getTechnicianIdNumber())">Retry</button>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (!loading() && !error() && filteredAssignments.length === 0) {
+    <div class="empty-state">
+      @if (hasActiveFilters()) {
+        <p>No assignments match your filters.</p>
+        <button (click)="resetFilters()">Clear filters</button>
+      } @else {
+        <p>All caught up! No pending assignments.</p>
+      }
+    </div>
+  }
+
+  <!-- Assignments Table -->
+  @if (!loading() && !error() && filteredAssignments.length > 0) {
+    <div class="assignments-container">
+      <table class="assignments-table">
+        <thead>
+          <tr>
+            <th>Apartment</th>
+            <th>Problem Type</th>
+            <th>Description</th>
+            <th>Request Date</th>
+            <th>Priority</th>
+            <th>Proposed Cost</th>
+            <th>Proposed Duration</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (assignment of filteredAssignments; track trackByRequestId($index, assignment)) {
+            <tr>
+              <td>#{{ assignment.apartmentNumber || assignment.apartment_id || 'N/A' }}</td>
+              <td>{{ assignment.problem_type || 'General' }}</td>
+              <td>{{ truncateText(assignment.description, 50) }}</td>
+              <td>{{ formatDate(assignment.request_date) }}</td>
+              <td>
+                @if (assignment.priority) {
+                  <span class="priority-badge priority-{{ assignment.priority.toLowerCase() }}">
+                    {{ assignment.priority }}
+                  </span>
+                } @else {
+                  <span>Not set</span>
+                }
+              </td>
+
+              <!-- Editable cost input -->
+              <td>
+                @if (assignment.status === 'Pending') {
+                  <input type="number" [(ngModel)]="assignment.proposed_cost" min="0" placeholder="Cost" style="width: 70px;" />
+                } @else {
+                  {{ assignment.proposed_cost !== null && assignment.proposed_cost !== undefined ? 
+                     (assignment.proposed_cost | currency) : '-' }}
+                }
+              </td>
+
+              <!-- Editable duration input -->
+              <td>
+                @if (assignment.status === 'Pending') {
+                  <input type="text" [(ngModel)]="assignment.proposed_duration" placeholder="e.g. 2 days" style="width: 100px;" />
+                } @else {
+                  {{ assignment.proposed_duration || '-' }}
+                }
+              </td>
+
+              <td class="actions">
+                @if (assignment.status === 'Pending') {
+                  <button
+                    class="submit-btn"
+                    (click)="submitProposal(assignment)"
+                    [disabled]="isProcessing(assignment.id)">
+                    Submit
+                  </button>
+                  <button
+                    class="accept-btn"
+                    (click)="respondToRequest(assignment.id, 'Accepted', $event)"
+                    [disabled]="isProcessing(assignment.id)">
+                    Accept
+                  </button>
+                  <button
+                    class="reject-btn"
+                    (click)="respondToRequest(assignment.id, 'Rejected', $event)"
+                    [disabled]="isProcessing(assignment.id)">
+                    Reject
+                  </button>
+                }
+                <button class="details-btn" (click)="viewDetails(assignment.id)">
+                  Details
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
